@@ -19,7 +19,7 @@ else:
     quote, *_ = response['contents']['quotes']
     text_content, author = (quote['quote'], quote['author'])
     width = min(len(text_content), 80) # cap width at 80 characters
-    h_sep = '+' + '-' * + width + '+'
+    h_sep = '+' + '-' * width + '+'
     padding = (width - len(author)) * " " # right-justify with spaces
 
     print(h_sep)
