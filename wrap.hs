@@ -12,7 +12,7 @@ getTruncatedLn' _ curr [] = (curr, [])
 getTruncatedLn' width curr rem =
     if length next <= width then getTruncatedLn' width next (tail rem)
                             else (curr, rem)
-    where next = curr ++ " " ++ head rem
+                            where next = curr ++ " " ++ head rem
 
 wrap :: Int -> String -> String
 wrap width = intercalate "\n" . wrap' width . words
