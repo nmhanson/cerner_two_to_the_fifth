@@ -1,6 +1,7 @@
 /*
  * Creates a repeating pattern of the parrotwaveN emote on slack of a desired length.
  * Run, then copy/paste the output into CernerDev slack.
+ *
  * To compile: rustc parrotwave.rs
  * To run: ./parrotwave <number_of_parrots>
  *
@@ -8,8 +9,7 @@
  */
 use std::env;
 
-type Error = &'static str;
-type Result<T> = std::result::Result<T, Error>;
+type Result<T> = std::result::Result<T, &'static str>;
 
 fn main() {
     let res = env::args()
@@ -18,11 +18,14 @@ fn main() {
         .and_then(parse)
         .map(wave_n_times);
 
-    println!("{}", res.unwrap_or_else(|err| err.to_string()))
+    match res {
+        Ok(output) => println!("{}", output),
+        Err(msg) => eprintln!("{}", msg),
+    }
 }
 
 fn parse(s: String) -> Result<usize> {
-    s.parse::<usize>().map_err(|_| "Argument must be a positive integer.")
+    s.parse().map_err(|_| "Argument must be a positive integer.")
 }
 
 fn wave_n_times(n: usize) -> String {
